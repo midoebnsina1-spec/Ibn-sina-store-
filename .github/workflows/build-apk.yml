@@ -1,0 +1,46 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout workspace
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Cordova
+        run: npm install -g cordova
+
+      - name: Create App
+        run: |
+          cordova create app com.ibnsina.store "IbnSina"
+          rm -rf app/www/*
+          cp index.html app/www/
+          
+      - name: Build Android
+        working-directory: ./app
+        run: |
+          cordova platform add android
+          cordova build android
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: IbnSina-Store-APK
+          path: app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
