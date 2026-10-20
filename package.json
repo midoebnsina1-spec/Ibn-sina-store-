@@ -1,0 +1,16 @@
+{
+  "name": "ibn-sina-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ماركت وعطارة ابن سينا - تطبيق متجر أندرويد",
+  "scripts": {
+    "android:prepare": "npx cap add android && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}
