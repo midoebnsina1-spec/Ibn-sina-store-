@@ -1,103 +1,406 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#095d40">
-<title>ماركت وعطارة ابن سينا</title>
-<style>
-:root{--bg:#121815;--card:#1e2923;--green:#095d40;--gold:#d4af37;--light:#f5f5f5;--muted:#bdc8c1;--red:#d94a45}
-*{box-sizing:border-box}body{margin:0;padding-bottom:88px;background:var(--bg);color:var(--light);font-family:Tahoma,Arial,sans-serif}
-header{padding:22px 16px;text-align:center;background:linear-gradient(135deg,#06432f,#0c6b49);border-bottom:3px solid var(--gold)}
-header h1{margin:0;color:var(--gold);font-size:25px}header p{margin:8px 0 0;color:#e8efe9}
-main{max-width:1000px;margin:auto;padding:16px}.topline{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-h2,h3{color:var(--gold)}.search{flex:1;min-width:180px}
-input,select,textarea{width:100%;padding:12px;margin:6px 0 12px;background:#18221c;color:white;border:1px solid #b99b32;border-radius:9px;font:inherit}
-label{display:block;color:#e9dfb9;font-size:14px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
-.card{background:var(--card);border:1px solid #24563e;border-radius:14px;padding:14px;box-shadow:0 4px 12px #0002}
-.product-name{color:var(--gold);font-weight:bold;font-size:17px;margin:5px 0 9px}.muted{color:var(--muted);font-size:13px;line-height:1.6}.price{font-size:16px;margin:10px 0}.btn{border:0;border-radius:9px;padding:11px 13px;background:var(--gold);color:#17130a;font-weight:bold;font-size:14px;cursor:pointer;width:100%;margin-top:5px}
-.btn.green{background:#25d366;color:#082b16}.btn.dark{background:#33473b;color:white}.btn.red{background:#a62d2d;color:white}.btn.small{width:auto;padding:7px 10px;margin:3px}
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:space-around;background:#1e2923;border-top:2px solid var(--gold);padding:10px 4px calc(10px + env(safe-area-inset-bottom))}
-.nav{background:none;border:0;color:var(--gold);font-size:13px;min-width:75px;cursor:pointer}.nav span{display:block;font-size:20px;margin-bottom:3px}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:14px}.modal.show{display:flex}
-.modalbox{width:min(100%,520px);max-height:88vh;overflow:auto;background:var(--bg);border:2px solid var(--gold);border-radius:16px;padding:18px}
-.close{float:left;color:#ff7373;background:none;border:0;font-size:28px}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.item{padding:10px 0;border-bottom:1px solid #39463e}.total{font-size:19px;font-weight:bold;border-top:1px solid var(--gold);padding-top:12px;margin-top:12px}
-.payment{padding:12px;border-radius:10px;text-align:center;margin:8px 0;background:linear-gradient(45deg,#b30000,#710000)}.payment.ip{background:linear-gradient(45deg,#660099,#330066)}
-.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#2b4937;color:#d6e9db;font-size:12px}.empty{text-align:center;padding:28px;color:var(--muted)}
-.hidden{display:none!important}.adminsection{border-top:1px solid #455247;margin-top:16px;padding-top:8px}.notice{font-size:12px;color:#c9d2cb;line-height:1.6}
-</style>
+    <meta charset="UTF-8">
+    <!-- أهم كود لتطبيقات الموبايل: منع التكبير وتحديد حجم الشاشة -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- تلوين شريط الحالة (البطارية والساعة) في الأندرويد -->
+    <meta name="theme-color" content="#095d40">
+    <title>ماركت وعطارة ابن سينا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121815;
+            --card-bg: #1e2923;
+            --emerald: #095d40;
+            --gold: #D4AF37;
+            --text-light: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
+            /* منع تحديد النصوص في التطبيق */
+            -webkit-user-select: none;
+            user-select: none;
+            /* منع المربع الأزرق عند الضغط على الأزرار */
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
+        }
+
+        /* شاشة الترحيب (Splash Screen) */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--emerald);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease;
+        }
+        #splash-screen h1 {
+            color: var(--gold);
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        #splash-screen p {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        header {
+            background-color: var(--emerald);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        header h1 { margin: 0; color: var(--gold); font-size: 1.8rem;}
+        
+        .container { padding: 15px; }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--emerald);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .product-card:active { transform: scale(0.95); }
+        .product-title { font-weight: bold; color: var(--gold); margin: 10px 0; font-size: 1.1rem;}
+        .product-price { color: #fff; margin-bottom: 10px; font-size: 0.9rem;}
+        
+        .btn {
+            background-color: var(--gold);
+            color: #000;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:active { opacity: 0.8; }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 2px solid var(--gold);
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+        }
+        .nav-item {
+            text-align: center;
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid var(--gold);
+            width: 85%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .close-btn { color: #ff4d4d; float: left; cursor: pointer; font-size: 28px; font-weight: bold; }
+        
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: var(--card-bg);
+            color: #fff;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .payment-card {
+            background: linear-gradient(45deg, #e60000, #990000);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .payment-card.instapay { background: linear-gradient(45deg, #660099, #330066); }
+    </style>
 </head>
 <body>
-<header><h1 id="shopTitle">ماركت وعطارة ابن سينا</h1><p>الأصالة والجودة من الطبيعة 🌿</p></header>
-<main>
-  <div class="topline"><h2>المنتجات والخلطات</h2><input id="search" class="search" placeholder="ابحث عن منتج..." oninput="renderProducts()"></div>
-  <div id="productsList" class="grid"></div>
-  <p class="notice">الأسعار المعروضة للعبوة/الوزن المحدد. المنتجات والأوامر تُحفظ على هذا الجهاز في هذه النسخة.</p>
-</main>
-<nav class="bottom">
-<button class="nav" onclick="openModal('cartModal')"><span>🛒</span>السلة (<b id="cartCount">0</b>)</button>
-<button class="nav" onclick="alert('قسم الحكيم قيد التجهيز')"><span>🌿</span>الحكيم</button>
-<button class="nav" onclick="adminLogin()"><span>⚙️</span>الإدارة</button>
-</nav>
 
-<div id="productModal" class="modal"><div class="modalbox">
-<button class="close" onclick="closeModal('productModal')">×</button><h2 id="modalTitle">تفاصيل المنتج</h2><p id="modalDesc" class="muted"></p>
-<label for="weight">اختر الوزن</label><select id="weight" onchange="updateModalPrice()"><option value="50">50 جرام</option><option value="100">100 جرام</option><option value="250">250 جرام</option><option value="500">500 جرام</option><option value="1000">1 كيلو</option></select>
-<p>المتاح بالمخزون: <b id="stockText"></b></p><h3 id="modalPrice"></h3><label for="qty">عدد العبوات</label><input id="qty" type="number" min="1" value="1">
-<button class="btn" onclick="addToCart()">أضف للسلة</button>
-</div></div>
+    <!-- شاشة الترحيب -->
+    <div id="splash-screen">
+        <h1>ابن سينا</h1>
+        <p>للأعشاب والخلطات الطبيعية</p>
+    </div>
 
-<div id="cartModal" class="modal"><div class="modalbox">
-<button class="close" onclick="closeModal('cartModal')">×</button><h2>سلة المشتريات</h2><div id="cartItems"></div><div class="total">الإجمالي: <span id="cartTotal">0</span> ج.م</div>
-<h3>بيانات التوصيل</h3><label>الاسم</label><input id="custName" autocomplete="name" placeholder="الاسم الكريم"><label>رقم الهاتف</label><input id="custPhone" inputmode="tel" placeholder="رقم للتواصل"><label>العنوان بالتفصيل</label><textarea id="custAddress" rows="2" placeholder="العنوان - العاشر من رمضان"></textarea>
-<label>طريقة الدفع</label><select id="paymentMethod"><option>الدفع عند الاستلام</option><option>فودافون كاش</option><option>إنستا باي</option></select>
-<div class="payment"><b>فودافون كاش</b><br>01093337992</div><div class="payment ip"><b>إنستا باي</b><br>01093337992</div>
-<button class="btn green" onclick="sendOrderWhatsApp()">حفظ الطلب وإرساله عبر واتساب</button>
-<p class="notice">سيُفتح واتساب برسالة الطلب الجاهزة. تأكد من الضغط على إرسال داخل واتساب.</p>
-</div></div>
+    <header>
+        <h1 id="shop-title">ماركت وعطارة ابن سينا</h1>
+        <p>الأصالة والعلاج من الطبيعة</p>
+    </header>
 
-<div id="adminModal" class="modal"><div class="modalbox">
-<button class="close" onclick="closeModal('adminModal')">×</button><h2>لوحة إدارة ابن سينا</h2>
-<p class="notice">هذه لوحة إدارة محلية وليست محمية بخادم. غيّر رمز الدخول من الإعدادات قبل الاستخدام.</p>
-<div class="adminsection"><h3>إضافة / تعديل منتج</h3><input id="editId" type="hidden"><label>اسم المنتج</label><input id="newName" placeholder="اسم المنتج"><label>الوصف</label><input id="newDesc" placeholder="وصف مختصر"><div class="row"><div><label>سعر 50 جرام (ج.م)</label><input id="newPrice" type="number" min="0" step=".5"></div><div><label>المخزون بالجرام</label><input id="newStock" type="number" min="0" step="1"></div></div><button class="btn" onclick="saveProduct()">حفظ المنتج</button><button class="btn dark" onclick="resetProductForm()">تفريغ الحقول</button></div>
-<div class="adminsection"><h3>المنتجات والمخزون</h3><div id="adminProducts"></div></div>
-<div class="adminsection"><h3>الطلبات المحفوظة</h3><div id="adminOrders"></div><button class="btn dark" onclick="exportData()">تصدير نسخة احتياطية JSON</button></div>
-<div class="adminsection"><h3>إعدادات الإدارة</h3><label>رقم واتساب المتجر مع مفتاح الدولة (مثال مصر 20...)</label><input id="shopWhatsApp" inputmode="tel"><label>رمز دخول الإدارة الجديد</label><input id="newPin" type="password" placeholder="اتركه فارغًا دون تغيير"><button class="btn" onclick="saveSettings()">حفظ الإعدادات</button></div>
-</div></div>
-<script>
-const KEY='ibnsina_store_v1';
-const defaults=[
-{id:1,name:'خلطة المناعة الملكية',desc:'مزيج من الزنجبيل والقرفة والكركم وحبة البركة.',basePrice:40,stock:5000},
-{id:2,name:'خلطة القولون والأعصاب',desc:'بابونج ويانسون وشمر.',basePrice:35,stock:5000},
-{id:3,name:'كركديه أسواني زهرة كاملة',desc:'كركديه طبيعي للشراب.',basePrice:20,stock:5000},
-{id:4,name:'فلفل أسود برازيلي حصى',desc:'توابل نقية درجة أولى.',basePrice:30,stock:5000}
-];
-let db=loadDB(), cart=[], currentProduct=null;
-function loadDB(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.products)&&Array.isArray(d.orders))return d}catch(e){}return {products:defaults,orders:[],settings:{whatsapp:'201093337992',pin:'1234'}}}
-function saveDB(){localStorage.setItem(KEY,JSON.stringify(db))}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function money(n){return Number(n||0).toLocaleString('ar-EG',{maximumFractionDigits:2})}
-function renderProducts(){let q=(document.getElementById('search').value||'').trim().toLowerCase();let list=db.products.filter(p=>p.name.toLowerCase().includes(q));let root=document.getElementById('productsList');root.innerHTML=list.map(p=>`<article class="card"><div class="product-name">${esc(p.name)}</div><div class="muted">${esc(p.desc)}</div><div class="price">${money(p.basePrice)} ج.م / 50 جرام</div><div class="muted">المخزون: ${money(p.stock)} جرام</div><button class="btn" ${p.stock<=0?'disabled':''} onclick="openProduct(${p.id})">${p.stock<=0?'نفد المخزون':'التفاصيل والطلب'}</button></article>`).join('')||'<div class="empty">لا توجد منتجات مطابقة.</div>'}
-function openProduct(id){currentProduct=db.products.find(p=>p.id===id);if(!currentProduct)return;document.getElementById('modalTitle').textContent=currentProduct.name;document.getElementById('modalDesc').textContent=currentProduct.desc;document.getElementById('weight').value='50';document.getElementById('qty').value='1';document.getElementById('stockText').textContent=money(currentProduct.stock)+' جرام';updateModalPrice();openModal('productModal')}
-function updateModalPrice(){if(!currentProduct)return;let w=+document.getElementById('weight').value;document.getElementById('modalPrice').textContent=money(currentProduct.basePrice*w/50)+' ج.م';document.getElementById('stockText').textContent=money(currentProduct.stock)+' جرام'}
-function addToCart(){if(!currentProduct)return;let w=+document.getElementById('weight').value,q=Math.floor(+document.getElementById('qty').value);if(!Number.isFinite(q)||q<1)return alert('أدخل عدد عبوات صحيحًا');let grams=w*q;let reserved=cart.filter(x=>x.id===currentProduct.id).reduce((s,x)=>s+x.grams,0);if(grams+reserved>currentProduct.stock)return alert('الكمية المطلوبة أكبر من المخزون المتاح');cart.push({id:currentProduct.id,name:currentProduct.name,weight:w,qty:q,grams,price:currentProduct.basePrice*w/50*q});updateCart();closeModal('productModal');openModal('cartModal')}
-function updateCart(){document.getElementById('cartCount').textContent=cart.reduce((s,x)=>s+x.qty,0);document.getElementById('cartItems').innerHTML=cart.map((x,i)=>`<div class="item"><b>${esc(x.name)}</b><div class="muted">${x.weight} جرام × ${x.qty} — ${money(x.price)} ج.م</div><button class="btn red small" onclick="removeCart(${i})">حذف</button></div>`).join('')||'<div class="empty">السلة فارغة</div>';document.getElementById('cartTotal').textContent=money(cart.reduce((s,x)=>s+x.price,0))}
-function removeCart(i){cart.splice(i,1);updateCart()}
-function sendOrderWhatsApp(){if(!cart.length)return alert('السلة فارغة');let name=document.getElementById('custName').value.trim(),phone=document.getElementById('custPhone').value.trim(),address=document.getElementById('custAddress').value.trim();if(!name||!address)return alert('اكتب الاسم والعنوان');for(let x of cart){let p=db.products.find(p=>p.id===x.id);if(!p||p.stock<x.grams)return alert('المخزون تغير للمنتج '+x.name+'، راجع السلة')}
-let total=cart.reduce((s,x)=>s+x.price,0),order={id:Date.now(),date:new Date().toLocaleString('ar-EG'),name,phone,address,payment:document.getElementById('paymentMethod').value,items:cart.map(x=>({...x})),total,status:'جديد'};
-db.orders.unshift(order);cart.forEach(x=>{let p=db.products.find(p=>p.id===x.id);p.stock-=x.grams});saveDB();renderProducts();renderAdmin();let msg=`طلب جديد - ماركت وعطارة ابن سينا%0Aرقم الطلب: ${order.id}%0Aالاسم: ${encodeURIComponent(name)}%0Aالهاتف: ${encodeURIComponent(phone||'غير محدد')}%0Aالعنوان: ${encodeURIComponent(address)}%0Aطريقة الدفع: ${encodeURIComponent(order.payment)}%0A%0A${order.items.map(x=>`• ${encodeURIComponent(x.name)} - ${x.weight} جم × ${x.qty} = ${money(x.price)} ج.م`).join('%0A')}%0A%0Aالإجمالي: ${money(total)} ج.م`;let url=`https://wa.me/${db.settings.whatsapp}?text=${msg}`;cart=[];updateCart();closeModal('cartModal');window.open(url,'_blank');alert('تم حفظ الطلب محليًا. أكمل الإرسال بالضغط على إرسال في واتساب.')}
-function openModal(id){document.getElementById(id).classList.add('show')}
-function closeModal(id){document.getElementById(id).classList.remove('show')}
-function adminLogin(){let pin=prompt('أدخل رمز الإدارة');if(pin===null)return;if(pin!==db.settings.pin)return alert('رمز الدخول غير صحيح');renderAdmin();document.getElementById('shopWhatsApp').value=db.settings.whatsapp;openModal('adminModal')}
-function resetProductForm(){['editId','newName','newDesc','newPrice','newStock'].forEach(id=>document.getElementById(id).value='')}
-function saveProduct(){let name=document.getElementById('newName').value.trim(),desc=document.getElementById('newDesc').value.trim(),price=+document.getElementById('newPrice').value,stock=+document.getElementById('newStock').value,id=document.getElementById('editId').value;if(!name||!Number.isFinite(price)||price<0||!Number.isFinite(stock)||stock<0)return alert('أدخل الاسم والسعر والمخزون بشكل صحيح');if(id){let p=db.products.find(p=>p.id===+id);if(p)Object.assign(p,{name,desc,basePrice:price,stock})}else db.products.push({id:Date.now(),name,desc,basePrice:price,stock});saveDB();resetProductForm();renderProducts();renderAdmin();alert('تم حفظ المنتج')}
-function editProduct(id){let p=db.products.find(p=>p.id===id);if(!p)return;document.getElementById('editId').value=p.id;document.getElementById('newName').value=p.name;document.getElementById('newDesc').value=p.desc;document.getElementById('newPrice').value=p.basePrice;document.getElementById('newStock').value=p.stock;document.getElementById('newName').scrollIntoView({behavior:'smooth',block:'center'})}
-function deleteProduct(id){if(!confirm('هل تريد حذف المنتج؟'))return;db.products=db.products.filter(p=>p.id!==id);saveDB();renderProducts();renderAdmin()}
-function updateStatus(id,status){let o=db.orders.find(o=>o.id===id);if(o){o.status=status;saveDB();renderAdmin()}}
-function renderAdmin(){document.getElementById('adminProducts').innerHTML=db.products.map(p=>`<div class="item"><b>${esc(p.name)}</b><div class="muted">${money(p.basePrice)} ج.م / 50 جم — المخزون ${money(p.stock)} جم</div><button class="btn dark small" onclick="editProduct(${p.id})">تعديل</button><button class="btn red small" onclick="deleteProduct(${p.id})">حذف</button></div>`).join('')||'<p class="muted">لا توجد منتجات</p>';document.getElementById('adminOrders').innerHTML=db.orders.map(o=>`<div class="item"><b>طلب #${o.id}</b><div class="muted">${esc(o.date)}<br>${esc(o.name)} — ${esc(o.address)}<br>${o.items.map(x=>esc(x.name)+' '+x.weight+'جم × '+x.qty).join('، ')}<br>الإجمالي: ${money(o.total)} ج.م</div><span class="pill">${esc(o.status)}</span><div class="row"><select onchange="updateStatus(${o.id},this.value)">${['جديد','قيد التجهيز','تم التسليم','ملغي'].map(s=>`<option ${o.status===s?'selected':''}>${s}</option>`).join('')}</select><button class="btn dark small" onclick="copyOrder(${o.id})">نسخ</button></div></div>`).join('')||'<p class="muted">لا توجد طلبات محفوظة بعد</p>'}
-function copyOrder(id){let o=db.orders.find(o=>o.id===id);if(!o)return;let t=`طلب #${o.id}\n${o.name}\n${o.address}\n${o.items.map(x=>x.name+' '+x.weight+' جم × '+x.qty).join('\n')}\nالإجمالي ${o.total} ج.م`;if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>alert('تم النسخ')).catch(()=>prompt('انسخ النص',t));else prompt('انسخ النص',t)}
-function saveSettings(){let wa=document.getElementById('shopWhatsApp').value.replace(/\D/g,'');if(wa.length<10)return alert('أدخل رقم واتساب صحيحًا مع مفتاح الدولة');db.settings.whatsapp=wa;let pin=document.getElementById('newPin').value;if(pin){if(pin.length<4)return alert('رمز الدخول يجب أن يكون 4 أرقام/حروف على الأقل');db.settings.pin=pin}saveDB();document.getElementById('newPin').value='';alert('تم حفظ الإعدادات')}
-function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ibn-sina-backup.json';a.click();URL.revokeObjectURL(url)}
-renderProducts();updateCart();
-</script>
-</body></html>
+    <div class="container">
+        <h2 style="color: var(--gold);">المنتجات والخلطات (أسعار 50 جرام)</h2>
+        <div class="products-grid" id="products-list">
+            <!-- المنتجات ستظهر هنا -->
+        </div>
+    </div>
+
+    <!-- الشريط السفلي -->
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="document.getElementById('cart-modal').style.display='flex'">
+            🛒<br>السلة (<span id="cart-count">0</span>)
+        </div>
+        <div class="nav-item" onclick="alert('قسم الحكيم: قريباً سيتم تفعيل الذكاء الاصطناعي لاقتراح الخلطات!')">
+            🪄<br>الحكيم
+        </div>
+        <div class="nav-item" onclick="openAdmin()">
+            ⚙️<br>الإدارة
+        </div>
+    </div>
+
+    <!-- نافذة تفاصيل المنتج -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('product-modal')">&times;</span>
+            <h2 id="modal-title" style="color: var(--gold); margin-top:0;"></h2>
+            <p id="modal-desc" style="line-height: 1.6;"></p>
+            
+            <label style="color: var(--gold); font-weight: bold;">اختر الكمية:</label>
+            <select id="weight-selector" onchange="updateModalPrice()">
+                <option value="1">50 جرام</option>
+                <option value="2">100 جرام</option>
+                <option value="5">250 جرام</option>
+                <option value="10">500 جرام (نصف كيلو)</option>
+            </select>
+            
+            <h3 id="modal-price" style="text-align: center; color: var(--emerald); background: var(--gold); padding: 10px; border-radius: 8px; color: #000;"></h3>
+            <button class="btn" onclick="addToCart()">أضف للسلة</button>
+        </div>
+    </div>
+
+    <!-- نافذة السلة والدفع -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cart-modal')">&times;</span>
+            <h2 style="color: var(--gold); margin-top:0;">سلة المشتريات</h2>
+            <div id="cart-items" style="max-height: 150px; overflow-y: auto;"></div>
+            <h3 style="border-top: 1px solid var(--gold); padding-top: 10px;">الإجمالي: <span id="cart-total">0</span> ج.م</h3>
+            
+            <hr style="border-color: var(--emerald);">
+            <h3 style="color: var(--gold);">بيانات التوصيل والدفع</h3>
+            <input type="text" id="cust-name" placeholder="الاسم الكريم">
+            <input type="text" id="cust-address" placeholder="العنوان (العاشر من رمضان)">
+            
+            <div class="payment-card">
+                <strong>فودافون كاش</strong><br>01093337992
+            </div>
+            <div class="payment-card instapay">
+                <strong>إنستا باي</strong><br>01093337992
+            </div>
+            
+            <button class="btn" style="background-color: #25D366; color: white; margin-top: 10px;" onclick="sendOrderWhatsApp()">تأكيد وإرسال واتساب</button>
+        </div>
+    </div>
+
+    <!-- نافذة لوحة التحكم -->
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('admin-modal')">&times;</span>
+            <h2 style="color: var(--gold); margin-top:0;">لوحة الإدارة</h2>
+            <p>إضافة خلطة أو منتج جديد</p>
+            <input type="text" id="new-name" placeholder="اسم المنتج/الخلطة">
+            <input type="number" id="new-price" placeholder="سعر الـ 50 جرام بالجنيه">
+            <input type="text" id="new-desc" placeholder="وصف وفوائد الخلطة">
+            <button class="btn" onclick="addNewProduct()">حفظ وإضافة للمتجر</button>
+        </div>
+    </div>
+
+    <script>
+        // إخفاء شاشة الترحيب بأمان تام
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var splash = document.getElementById('splash-screen');
+                if(splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(function() {
+                        splash.style.display = 'none';
+                    }, 500); // الانتظار حتى ينتهي تأثير الاختفاء
+                }
+            }, 2000); // عرض الشاشة لمدة ثانيتين
+        });
+
+        // المنتجات الأساسية
+        let products = [
+            { id: 1, name: "خلطة المناعة الملكية", desc: "مزيج قوي من الزنجبيل، القرفة، الكركم وحبة البركة لرفع مناعة الجسم.", basePrice: 40 },
+            { id: 2, name: "خلطة القولون والأعصاب", desc: "مزيج مهدئ من البابونج، اليانسون، والشمر لتهدئة تقلصات المعدة والأرق.", basePrice: 35 },
+            { id: 3, name: "خلطة الجيوب الأنفية", desc: "أعشاب طبيعية للاستنشاق والشرب لتفتيح الممرات التنفسية.", basePrice: 45 },
+            { id: 4, name: "خلطة التخسيس وحرق الدهون", desc: "مزيج عشبي فعال لزيادة معدل الحرق وسد الشهية بشكل طبيعي.", basePrice: 50 },
+            { id: 5, name: "كركديه أسواني زهرة كاملة", desc: "مشروب طبيعي لضبط ضغط الدم وإنعاش الجسم.", basePrice: 20 },
+            { id: 6, name: "فلفل أسود برازيلي حصى", desc: "توابل نقية درجة أولى خالية من الشوائب.", basePrice: 30 }
+        ];
+
+        let cart = [];
+        let currentProduct = null;
+
+        function renderProducts() {
+            const grid = document.getElementById('products-list');
+            grid.innerHTML = '';
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card" onclick="openProduct(${p.id})">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-price">${p.basePrice} ج.م / 50جم</div>
+                        <button class="btn">التفاصيل والطلب</button>
+                    </div>
+                `;
+            });
+        }
+
+        function openProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            document.getElementById('modal-title').innerText = currentProduct.name;
+            document.getElementById('modal-desc').innerText = currentProduct.desc;
+            document.getElementById('weight-selector').value = "1";
+            updateModalPrice();
+            document.getElementById('product-modal').style.display = 'flex';
+        }
+
+        function updateModalPrice() {
+            let multiplier = parseInt(document.getElementById('weight-selector').value);
+            let price = currentProduct.basePrice * multiplier;
+            let weight = multiplier * 50;
+            document.getElementById('modal-price').innerText = price + " ج.م / " + weight + " جرام";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function addToCart() {
+            let multiplier = parseInt(document.getElementById('weight-selector').value);
+            cart.push({
+                name: currentProduct.name,
+                weight: multiplier * 50,
+                price: currentProduct.basePrice * multiplier
+            });
+            document.getElementById('cart-count').innerText = cart.length;
+            updateCartUI();
+            closeModal('product-modal');
+            alert('تمت الإضافة للسلة بنجاح!');
+        }
+
+        function updateCartUI() {
+            let itemsDiv = document.getElementById('cart-items');
+            let total = 0;
+            itemsDiv.innerHTML = '';
+            cart.forEach(item => {
+                itemsDiv.innerHTML += `<p style="margin: 5px 0; border-bottom: 1px solid #333; padding-bottom: 5px;">- ${item.name} (${item.weight} جم) : ${item.price} ج.م</p>`;
+                total += item.price;
+            });
+            document.getElementById('cart-total').innerText = total;
+        }
+
+        function sendOrderWhatsApp() {
+            let name = document.getElementById('cust-name').value;
+            let address = document.getElementById('cust-address').value;
+            if(!name || !address || cart.length === 0) {
+                alert("يرجى التأكد من إضافة منتجات للسلة وكتابة الاسم والعنوان!");
+                return;
+            }
+            
+            let message = `*طلب جديد من تطبيق ابن سينا*%0A%0A`;
+            message += `*الاسم:* ${name}%0A*العنوان:* ${address}%0A%0A*الطلبات:*%0A`;
+            
+            let total = 0;
+            cart.forEach(item => {
+                message += `- ${item.name} (${item.weight} جم)%0A`;
+                total += item.price;
+            });
+            
+            message += `%0A*الإجمالي:* ${total} ج.م%0A(طريقة الدفع: فودافون كاش/إنستا باي)`;
+            
+            window.open(`https://wa.me/201093337992?text=${message}`, '_blank');
+        }
+
+        let clickCount = 0;
+        let clickTimer;
+        
+        function openAdmin() {
+            clickCount++;
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 400);
+            } else if (clickCount === 2) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                let pass = prompt("أدخل الرقم السري للإدارة (1234):");
+                if (pass === "1234") {
+                    document.getElementById('admin-modal').style.display = 'flex';
+                } else {
+                    alert("الرقم السري خاطئ!");
+                }
+            }
+        }
+
+        function addNewProduct() {
+            let name = document.getElementById('new-name').value;
+            let price = document.getElementById('new-price').value;
+            let desc = document.getElementById('new-desc').value || "منتج جديد מضاف من الإدارة";
+            
+            if(name && price) {
+                products.push({ id: products.length + 1, name: name, desc: desc, basePrice: parseInt(price) });
+                renderProducts();
+                alert('تمت إضافة المنتج بنجاح للمتجر!');
+                document.getElementById('new-name').value = '';
+                document.getElementById('new-price').value = '';
+                document.getElementById('new-desc').value = '';
+                closeModal('admin-modal');
+            } else {
+                alert("يرجى إدخال اسم المنتج والسعر!");
+            }
+        }
+
+        // تشغيل عرض المنتجات عند البداية
+        renderProducts();
+    </script>
+</body>
+</html>
